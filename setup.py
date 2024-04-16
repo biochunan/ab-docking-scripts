@@ -9,6 +9,8 @@ setup(
     packages=find_packages(),
     install_requires=[
         # List your dependencies here
+        'loguru',
+        'sblu'
     ],
     classifiers=[
         'Programming Language :: Python :: 3.10',
