@@ -1,7 +1,6 @@
 #!/bin/zsh
 
-set -e
-
+# set -e
 
 # Aim: install bioplib and bioptools
 # Dependencies: conda
@@ -18,9 +17,16 @@ print_msg() {
   >&2 echo "[$level] $(print_timestamp): $1"  # send to stderr
 }
 
-condaEnv=${1:-base}
+condaEnv="base"
+
+# activate conda
+source $HOME/.zshrc
+conda init zsh >/dev/null 2>&1
+conda activate $condaEnv
+
+# setup
 BASE=$(dirname $(realpath $0))  # /path/to/.devconatiner/assets
-SHELLTYPE=$(basename $SHELL)  # bash or zsh
+print_msg $BASE
 optDir=$HOME/opt
 mkdir -p $optDir
 
