@@ -31,17 +31,10 @@ env/
 .DS_Store
 Thumbs.db
 
-assets/bioplib-V3.11.tar.gz
-assets/bioptools-V1.10.tar.gz
-assets/DockQ.tar.gz
-assets/fftw-3.3.10.tar.gz
-assets/zrank_linux_64bit.tar.gz
-assets/haddock.tar.gz
-assets/piper.tar.gz
-test/interim/int_res
-test/interim/pdb1a2y_0P_ab_pnon.pdb
-test/interim/pdb1a2y_0P_ag_pnon.pdb
-test/interim/pdb1a2y_0P_pnon_maskfile.pdb
-test/interim/pdb1a2y_0P_pnon.pdb
+tmp
+test/interim
 experiments/
 assets/docking-tools
+test/pdb1a2y_0P_pgen.pdb
+assets/*.tar.gz
+assets/megadock-4.1.1.tgz
