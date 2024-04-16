@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 set -e
 
@@ -10,7 +10,7 @@ set -e
 function usage() {
   echo "Usage: $(basename $0)  --abdbfile|-f <abdbfile>  --outdir|-o <outdir>"
   echo "  --abdbfile|-f <abdbfile> : AbDb file       "
-  echo "  --outdir|-o <outdir>     : Output directory"
+  echo "  --outdir|-o <outdir>     : Output directory (default to ${PIPER_OUTDIR})"
   echo "  --help|-h                : Help            "
   # add example
   echo "Example:"
@@ -33,14 +33,14 @@ print_msg() {
 # CONFIG                                                                     #
 ##############################################################################
 BASE=$(dirname $(dirname $(realpath $0)))  # ab-docking-scripts
-SCRIPT=$BASE/abagdocking/piper/run_piper.py
 
 
 ##############################################################################
 # INPUT                                                                      #
 ##############################################################################
-# default value
-OUTDIR=$(dirname $(realpath $0))
+# default values
+outDir=$PIPER_OUTDIR
+inDir=$PIPER_INDIR
 # Parse command line options
 while [[ $# -gt 0 ]]
 do
@@ -50,7 +50,7 @@ do
       abdbFile="$2"
       shift 2;;  # past argument and value
     --outdir|-o)
-      OUTDIR="$2"
+      outDir="$2"
       shift 2;; # past argument and value
     --help|-h)
       usage
@@ -74,24 +74,25 @@ fi
 # MAIN                                                                       #
 ##############################################################################
 # activate conda environment
-conda init bash >/dev/null 2>&1
-source ~/.bashrc
+print_msg "Activating conda environment" "INFO"
+conda init zsh >/dev/null 2>&1
+source $HOME/.zshrc
 conda activate abagdocking
 
 print_msg "Processing AbDb file: $(basename $abdbFile)" "INFO"
 
 # create the interim directory
-outDir=$OUTDIR
 interimDir=$outDir/interim
 mkdir -p $interimDir
 
+name=${$(basename $abdbFile)%.*}
 # 1. split the complex structure into ab and ag
-split_abag_chains $ABDB/pdb${abdbid}.mar \
-  -o $interimDir > $outDir/$abdbid.log 2>&1
+split_abag_chains $abdbFile \
+  -o $interimDir #> $outDir/$name.log 2>&1
 
 # 2. run piper
-python $SCRIPT \
+python /home/vscode/docking/abagdocking/piper/run_piper.py \
   -c $abdbFile \
-  -r $interimDir/pdb${abdbid}_ab.pdb \
-  -l $interimDir/pdb${abdbid}_ag.pdb \
-  -o $outDir >> $outDir/$abdbid.log 2>&1
+  -r $interimDir/${name}_ab.pdb \
+  -l $interimDir/${name}_ag.pdb \
+  -o $outDir #>> $outDir/$name.log 2>&1
