@@ -28,9 +28,8 @@ V1.0   12.11.21   Original   By: OECH
 
 """
 
-import os, argparse
+import argparse
 from pathlib import Path
-import tempfile
 from abagdocking.utils.util import call_script
 
 

@@ -65,7 +65,7 @@ SCRIPTS_CONFIG = {
 for k, v in SCRIPTS_CONFIG.items():
     try:
         assert v.exists()
-    except FileNotFoundError:
+    except Exception as e:
         logger.error(f"Cannot find the {k} script at {v}")
         sys.exit(1)
 
