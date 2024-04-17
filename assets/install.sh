@@ -26,7 +26,7 @@ sed -i 's|DEST=${HOME}|DEST=/opt/bioplib|g' Makefile
 make
 sudo make install
 sudo make installdata
-echo "export DATADIR=$HOME/data >> ~/.zshrc"
+echo "export DATADIR=/opt/bioplib/data >> ~/.zshrc"
 popd
 
 
