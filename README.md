@@ -34,22 +34,21 @@ Let us know:
   - [Usage](#usage)
     - [PIPER](#piper)
   - [Docking Architecture](#docking-architecture)
-  - [Directories](#directories)
-    - [test](#test)
-  - [BiopTools](#bioptools)
-  - [Scripts](#scripts)
-    - [common/dockingtools\_lib.py](#commondockingtools_libpy)
-    - [common/split\_abag\_chains.py](#commonsplit_abag_chainspy)
-    - [megadock/run\_megadock\_ranked.py](#megadockrun_megadock_rankedpy)
-    - [piper/run\_piper.py](#piperrun_piperpy)
-    - [haddock/run\_haddock.py](#haddockrun_haddockpy)
-    - [rosetta/run\_rosetta.py](#rosettarun_rosettapy)
-    - [run\_profit\_single.py](#run_profit_singlepy)
-    - [evaluate\_interface.py](#evaluate_interfacepy)
-    - [test\_docking\_progs\_master.py](#test_docking_progs_masterpy)
-    - [get\_summary\_results.py](#get_summary_resultspy)
-    - [run\_test\_docking\_progs\_master.sh](#run_test_docking_progs_mastersh)
-    - [extract\_results.py](#extract_resultspy)
+  - [Dependencies](#dependencies)
+    - [BiopLib and BiopTools](#bioplib-and-bioptools)
+    - [abagdocking](#abagdocking)
+      - [common/dockingtools\_lib.py](#commondockingtools_libpy)
+      - [common/split\_abag\_chains.py](#commonsplit_abag_chainspy)
+      - [megadock/run\_megadock\_ranked.py](#megadockrun_megadock_rankedpy)
+      - [piper/run\_piper.py](#piperrun_piperpy)
+      - [haddock/run\_haddock.py](#haddockrun_haddockpy)
+      - [rosetta/run\_rosetta.py](#rosettarun_rosettapy)
+      - [profit/run\_profit\_single.py](#profitrun_profit_singlepy)
+      - [utils/evaluate\_interface.py](#utilsevaluate_interfacepy)
+      - [test](#test)
+      - [test\_docking\_progs\_master.py](#test_docking_progs_masterpy)
+      - [get\_summary\_results.py](#get_summary_resultspy)
+      - [run\_test\_docking\_progs\_master.sh](#run_test_docking_progs_mastersh)
   - [reproduce data](#reproduce-data)
   - [config yaml setup](#config-yaml-setup)
 
@@ -78,28 +77,23 @@ conda install gxx_linux-64 -y
 
 This figure shows the architecture of the docking evaluation analysis. Solved antibody-antigen complexes are split into their antibody and antigen components by `split_abag_chains.py`. The split structures are used as input for the docking algorithms, the output of which is a single docked complex structure. This structure is evaluated by comparison to the native complex using ProFit.
 
-## Directories
+## Dependencies
 
-### test
-
-Contains test files for some functions written in Python scripts.
-A ReadMe file describing the contents and expected result for each test is provided.
-
-## BiopTools
+### BiopLib and BiopTools
 
 Many of the scripts in this repository call on programs in the BiopTools collection of tools built on the BiopLib library written by Andrew Martin. The library and tools are available from (<https://github.com/ACRMGroup/bioptools/releases>). The programs used must be in the path on a local machine for the scripts to run as intended. Alternatively, scripts can be modified to define the location of the programs.
 
-## Scripts
+### abagdocking
 
-### common/dockingtools_lib.py
+#### common/dockingtools_lib.py
 
 A library of tools frequently used by scripts in `ab-docking-scripts`.
 
-### common/split_abag_chains.py
+#### common/split_abag_chains.py
 
 This script was written to split an input antibody-antigen complex into its antibody and antigen components, randomly rotating and translating the antigen chain by up to 8 degrees and 3 angstroms. The script filters input files for the number of antigen chains present, skipping files that have no antigen or that have multiple antigen chains.
 
-### megadock/run_megadock_ranked.py
+#### megadock/run_megadock_ranked.py
 
 Script to run the Megadock docking program, followed by the ZRANK ranking program, available from (<https://www.bi.cs.titech.ac.jp/megadock/archives/megadock-4.1.1.tgz>) and (<https://zdock.umassmed.edu/software/download/>), respectively. This script takes up to 3 command line arguments:
 
@@ -108,7 +102,7 @@ Script to run the Megadock docking program, followed by the ZRANK ranking progra
 - Output directory (optional)
 The output is a single file with the suffix '_MegadockRanked_result.pdb'.
 
-### piper/run_piper.py
+#### piper/run_piper.py
 
 Script to run the PIPER docking program, available from (<https://cluspro.bu.edu/downloads.php>). This script calls on maskNIres.py to write a mask file of non-interface residues for input to PIPER which in turn calls on `findif.pl` to define interface residues. This script takes up to 4 command line arguments:
 
@@ -118,7 +112,7 @@ Script to run the PIPER docking program, available from (<https://cluspro.bu.edu
 - Output directory (optional)
 The output is a single file with the suffix '_Piper_result.pdb'.
 
-### haddock/run_haddock.py
+#### haddock/run_haddock.py
 
 Script to run the HADDOCK docking program, available from (<https://www.bonvinlab.org/software/haddock2.4/download/>). HADDOCK relies on the CNS program, available from (<http://cns-online.org/v1.3/>). This script takes up to 4 command line arguments:
 
@@ -128,7 +122,7 @@ Script to run the HADDOCK docking program, available from (<https://www.bonvinla
 - Output directory (optional)
 The output is two files with the suffixes '_Haddock_nowaters_result.pdb' and '_Haddock_waters_result.pdb'.
 
-### rosetta/run_rosetta.py
+#### rosetta/run_rosetta.py
 
 Script to run the RosettaDock docking program, available from (<https://www.rosettacommons.org/software/academic>). This script takes up to 5 command line arguments:
 
@@ -139,7 +133,7 @@ Script to run the RosettaDock docking program, available from (<https://www.rose
 - Output directory (optional)
 The output is a single file with the suffix '_Rosetta_result.pdb'.
 
-### run_profit_single.py
+#### profit/run_profit_single.py
 
 Script to evaluate the complexes predicted by docking programs using ProFit, available from (<http://www.bioinf.org.uk/software/profit/>). This script takes up to 3 command line arguments:
 
@@ -150,7 +144,7 @@ The output is two lines on the command line:
 - 'All atoms RMSD:  '
 - 'CA atoms RMSD:   '
 
-### evaluate_interface.py
+#### utils/evaluate_interface.py
 
 Script to evaluate the complexes predicted by docking programs by the proportion of correctly predicted interface residues. This script takes up to 3 command line arguments:
 
@@ -164,7 +158,12 @@ The output is five lines on the command line:
 - 'Correctly predicted residues (antibody): '
 - 'Correctly predicted residues (antigen):  '
 
-### test_docking_progs_master.py
+#### test
+
+Contains test files for some functions written in Python scripts.
+A ReadMe file describing the contents and expected result for each test is provided.
+
+#### test_docking_progs_master.py
 
 Wrapper script to run the scripts described above, following the architecture shown above. This script takes up to 2 command line arguments:
 
@@ -172,23 +171,15 @@ Wrapper script to run the scripts described above, following the architecture sh
 - Output directory (optional)
 The output includes multiple lines of code specifying what script is being run, that script's standard input/output, markers for the completion of a script, and multiple results files.
 
-### get_summary_results.py
+#### get_summary_results.py
 
 Defunct script to extract summary results from result files generated by `test_docking_progs_master.py`.
 
 Replaced with `extract_results.py`.
 
-### run_test_docking_progs_master.sh
+#### run_test_docking_progs_master.sh
 
 Wrapper script calling the `test_docking_progs_master.py` script and the `get_summary_results.py` script. (N.b. getsummaryresults.py did not work as intended and was replaced with the extract_results.py script, though it is still called by this wrapper).
-
-### extract_results.py
-
-Script to extract the result values for a docking run if it has been completed. This script takes up to 2 command line arguments:
-
-- Path to the logfile written with the testdockingprogs_master.py script
-- Output directory (optional)
-The output is a JSON file with the suffix '_results.json'.
 
 ## reproduce data
 
