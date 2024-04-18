@@ -45,7 +45,7 @@ V1.0   11.11.21   Original   By: OECH
 
 import sys
 import subprocess
-from .runprofit_lib import (combineabdagfiles, writecontrolscript)
+from .run_profit_lib import (combineabdagfiles, writecontrolscript)
 
 #*************************************************************************
 

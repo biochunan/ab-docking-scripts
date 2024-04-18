@@ -37,7 +37,7 @@ V1.0   19.11.2021   Original   By: OECH
 import sys
 import os
 import subprocess
-from abagdocking.profit.runprofit_lib import combineabdagfiles
+from abagdocking.profit.run_profit_lib import combineabdagfiles
 
 #*************************************************************************
 # Get input files

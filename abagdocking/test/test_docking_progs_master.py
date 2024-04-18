@@ -35,7 +35,7 @@ V1.0   12.11.21   Original   By: OECH
 import sys, os, subprocess, time, re, statistics
 from threading import Timer
 from abagdocking.common.dockingtools_lib import evaluate_results, getlowestscore, gethighestscore, getnumberhits, writefile, getantigenchainid
-from .testdockingprogs_master_lib import run_megadock, run_piper, run_rosetta, program_prompt, run_zdock, run_haddock
+from .test_dockingprogs_master_lib import run_megadock, run_piper, run_rosetta, program_prompt, run_zdock, run_haddock
 
 #*************************************************************************
 

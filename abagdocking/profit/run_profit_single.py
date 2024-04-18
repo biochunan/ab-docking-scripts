@@ -35,7 +35,7 @@ V1.0   06.12.2021   Original   By: OECH
 
 import sys, os
 import subprocess
-from .runprofit_lib import (writecontrolscript)
+from .run_profit_lib import (writecontrolscript)
 
 #*************************************************************************
 
