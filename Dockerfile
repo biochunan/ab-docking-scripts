@@ -102,7 +102,8 @@ RUN rm *.tar.gz
 ENV PIPER_SCRIPT=${DOCKING_DIR}/abagdocking/piper/run_piper.py \
   PIPER_INDIR=${DOCKING_DIR}/input \
   PIPER_OUTDIR=${DOCKING_DIR}/output \
-  ENTRY_SCRIPT=${DOCKING_DIR}/scripts/run-piper.sh
+  ENTRY_SCRIPT=${DOCKING_DIR}/scripts/run-piper.sh \
+  DATADIR=/opt/bioplib/data
 RUN mkdir -p ${PIPER_INDIR} ${PIPER_OUTDIR}
 WORKDIR ${DOCKING_DIR}
 ENTRYPOINT [ "zsh", "scripts/run-piper.sh" ]
