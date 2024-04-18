@@ -36,6 +36,7 @@ Let us know:
   - [Docking Architecture](#docking-architecture)
   - [Dependencies](#dependencies)
     - [BiopLib and BiopTools](#bioplib-and-bioptools)
+  - [ TODOs](#todos)
 
 ---
 
@@ -68,7 +69,7 @@ This figure shows the architecture of the docking evaluation analysis. Solved an
 
 Many of the scripts in this repository call on programs in the BiopTools collection of tools built on the BiopLib library written by Andrew Martin. The library and tools are available from (<https://github.com/ACRMGroup/bioptools/releases>). The programs used must be in the path on a local machine for the scripts to run as intended. Alternatively, scripts can be modified to define the location of the programs.
 
-## TODOs
+##  TODOs
 
 - [ ] Obtain Datasets
 - [ ] Dependency Installation
