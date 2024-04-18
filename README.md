@@ -12,7 +12,9 @@ We described the evaluation of four docking algorithms: `Megadock`, `PIPER`, `HA
 - All methods need improvement on AbAg docking
 - `Megadock`: easier, faster, showed similar accuracy with `PIPER` and `RosettaDock,` better than `HADDOCK.`
 
-![](figures/superimpose-decoy-native.png)
+<img width="500" alt="image" src=figures/superimpose-decoy-native.png>
+
+Example: superimpose the docked antigen structure (green, blue, magenta, yellow) on the native antigen structure (white). `A`-`D`: `High`, `Medium`, `Acceptable`, and `Incorrect` quality (these are `DockQ` categories) of the docked antigen structure, respectively. PDB code: `3RU8`.
 
 ## 🤝 Collaboration
 
