@@ -1,9 +1,10 @@
-# Bencharmk antibody-antigen docking programs
+# Benchmark antibody-antigen docking programs
 
 This is based on Oliver Hood's repository ([@oliverhood](https://github.com/oliverhood)) for scripts related to his MSci project 'Evaluating Protein-Protein Docking Algorithms for Predicting Antibody-Antigen Binding'.
 
-We described the evaluation of four docking algorithms: `Megadock`, `PIPER`, `HADDOCK`, and `RosettaDock`, on a set of non-redundant antibody-antigen (AbAg) complexes. 
-- `Megadock` was benchmarked using the full set composed of `1797` complexes since it is pretty fast, ~3 seconds to complete docking for a pair of antibodies and antigens using a GPU (NVIDIA RTX3090). 
+We described the evaluation of four docking algorithms: `Megadock`, `PIPER`, `HADDOCK`, and `RosettaDock`, on a set of non-redundant antibody-antigen (AbAg) complexes.
+
+- `Megadock` was benchmarked using the full set composed of `1797` complexes since it is pretty fast, ~3 seconds to complete docking for a pair of antibodies and antigens using a GPU (NVIDIA RTX3090).
 - The other three methods were benchmarked using a further reduced set of `540` complexes because they are computationally expensive. For example, on average, `PIPER` took on average ~14 minutes to complete docking for a pair using 128 CPU threads (it also depends on the antibody and antigen sizes).
 
 ## 👀 TL;DR
@@ -11,9 +12,12 @@ We described the evaluation of four docking algorithms: `Megadock`, `PIPER`, `HA
 - All methods need improvement on AbAg docking
 - `Megadock`: easier, faster, showed similar accuracy with `PIPER` and `RosettaDock,` better than `HADDOCK.`
 
+![](figures/superimpose-decoy-native.png)
+
 ## 🤝 Collaboration
 
 Let us know:
+
 - If you want to test your method on our dataset
 - If you want to dock your antibody and antigen structures (Academic research only; Commercial use is subject to the LICENSE of each program).
 
@@ -21,8 +25,9 @@ Let us know:
 
 ## Content
 
-- [ab-docking-scripts](#ab-docking-scripts)
-  - [Abstract](#abstract)
+- [Benchmark antibody-antigen docking programs](#benchmark-antibody-antigen-docking-programs)
+  - [👀 TL;DR](#-tldr)
+  - [🤝 Collaboration](#-collaboration)
   - [Content](#content)
   - [Usage](#usage)
     - [PIPER](#piper)
