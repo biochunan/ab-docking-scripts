@@ -15,6 +15,8 @@ def call_script(
     stdout = stdout or subprocess.PIPE
     stderr = stderr or subprocess.PIPE
     decode = decode or "utf-8"
+    # info
+    logger.info(f"Running command:\n{' '.join(cmd_list)}")
     # run
     process = subprocess.Popen(args=cmd_list, stdout=stdout, stderr=stderr, **kwargs)
     # post-processing
@@ -23,8 +25,10 @@ def call_script(
     if decode:
         if stdout:
             stdout = stdout.decode(decode)
+            logger.debug(f"stdout:\n{stdout}")
         if stderr:
             stderr = stderr.decode(decode)
+            logger.debug(f"stderr:\n{stderr}")
     # if retcode is not 0, raise an exception
     if retcode != 0:
         logger.error(f"Error running command: {cmd_list}, error info:\n{stderr}")
