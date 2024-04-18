@@ -1,14 +1,23 @@
-# ab-docking-scripts
+# Bencharmk antibody-antigen docking programs
 
-This is my repository for scripts relating to my MSci project with the working title 'Evaluating Protein-Protein Docking Algorithms for Predicting Antibody-Antigen Binding'.
+This is based on Oliver Hood's repository ([@oliverhood](https://github.com/oliverhood)) for scripts related to his MSci project 'Evaluating Protein-Protein Docking Algorithms for Predicting Antibody-Antigen Binding'.
 
-## Abstract
+We described the evaluation of four docking algorithms: `Megadock`, `PIPER`, `HADDOCK`, and `RosettaDock`, on a set of non-redundant antibody-antigen (AbAg) complexes. 
+- `Megadock` was benchmarked using the full set composed of `1797` complexes since it is pretty fast, ~3 seconds to complete docking for a pair of antibodies and antigens using a GPU (NVIDIA RTX3090). 
+- The other three methods were benchmarked using a further reduced set of `540` complexes because they are computationally expensive. For example, on average, `PIPER` took on average ~14 minutes to complete docking for a pair using 128 CPU threads (it also depends on the antibody and antigen sizes).
 
-The high specificity and affinity of antibodies for their antigens make them attractive targets for the development of therapeutics, a huge market that is expected to expand through 2026. The rational design of antibody therapeutics is limited by the knowledge of the epitope bound by the antibody, with conventional epitope mapping approaches such as alanine scanning and X-ray crystallography being both time-consuming and labor-intensive. The in silico determination of antibody-antigen complexes is therefore of value.
+## 👀 TL;DR
 
-There exist numerous protein ‘docking’ algorithms, many of which have been assessed by the Critical Assessment of PRedicted Interactions. This assessment lacks a comprehensive evaluation of docking accuracy with regard to antibody-antigen complexes, with only 7 of 107 target complexes featuring antibody-antigen complexes. Here we describe an evaluation of four docking algorithms: Megadock, PIPER, HADDOCK, and RosettaDock, on 39 antibody-antigen complexes.
+- All methods need improvement on AbAg docking
+- `Megadock`: easier, faster, showed similar accuracy with `PIPER` and `RosettaDock,` better than `HADDOCK.`
 
-We show that, despite utilizing a less complicated approach to docking, Megadock produces complex structures at a similar accuracy to PIPER and RosettaDock, while producing results in a substantially shorter period of time. These results present Megadock as a useful tool for the development of antibody therapeutics, as well as antibody research generally.
+## 🤝 Collaboration
+
+Let us know:
+- If you want to test your method on our dataset
+- If you want to dock your antibody and antigen structures (Academic research only; Commercial use is subject to the LICENSE of each program).
+
+---
 
 ## Content
 
