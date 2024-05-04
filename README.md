@@ -37,6 +37,9 @@ Let us know:
   - [Dependencies](#dependencies)
     - [BiopLib and BiopTools](#bioplib-and-bioptools)
   - [ TODOs](#todos)
+  - [Dockerfiles](#dockerfiles)
+    - [PIPER](#piper-1)
+    - [Haddock](#haddock)
 
 ---
 
@@ -74,3 +77,25 @@ Many of the scripts in this repository call on programs in the BiopTools collect
 - [ ] Obtain Datasets
 - [ ] Dependency Installation
 - [ ] Usage of each program with examples
+
+## Dockerfiles
+
+Run docker build under the repo root directory, DO NOT run under the `Dockerfiles` directory.
+
+Example:
+
+```shell
+cd /path/to/ab-docking-scripts  # the root directory of this repo
+
+# run desired Dockerfile, e.g.
+docker build -f Dockerfiles/Dockerfile.piper.root -t $USER/piper:latest .
+```
+
+### PIPER
+
+### Haddock
+
+Dependencies:
+
+- BiopLib, BiopTools
+
