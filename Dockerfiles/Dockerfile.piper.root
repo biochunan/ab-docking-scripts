@@ -1,0 +1,82 @@
+# FROM nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04
+FROM nvidia/cuda:12.2.2-cudnn8-runtime-ubuntu22.04
+
+# build tools
+RUN apt-get update \
+  && apt-get -yq install \
+  build-essential \
+  curl \
+  git \
+  zsh
+
+# ------------------------------------------------------------------------------
+# Install zsh and oh-my-zsh
+# ------------------------------------------------------------------------------
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" || true \
+  && chsh -s /bin/zsh
+
+# Switch to zsh shell; note this applies to all RUN commands after
+SHELL ["/bin/zsh", "-c"]
+
+# ------------------------------------------------------------------------------
+# Install miniconda
+# ------------------------------------------------------------------------------
+# credits: @pangyuteng
+# refer to: https://gist.github.com/pangyuteng/f5b00fe63ac31a27be00c56996197597
+# Use the above args during building https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
+# Choices
+# PLATFORM: Linux, MacOSX, or Windows
+# OS_TYPE : x86_64, arm64, ppc64le, s390x, or x86, armv7l
+ARG CONDA_VER=latest
+ARG PLATFORM=Linux
+ARG OS_TYPE=x86_64
+# Install miniconda to /miniconda
+RUN curl -LO "http://repo.continuum.io/miniconda/Miniconda3-${CONDA_VER}-Linux-${OS_TYPE}.sh"
+RUN bash Miniconda3-${CONDA_VER}-Linux-${OS_TYPE}.sh -p /miniconda -b
+RUN rm Miniconda3-${CONDA_VER}-Linux-${OS_TYPE}.sh
+ENV PATH=/miniconda/bin:${PATH}
+RUN source /miniconda/etc/profile.d/conda.sh \
+  && conda init zsh \
+  && conda update -y conda
+
+# copy files over
+ARG DOCKING_DIR=/docking
+RUN mkdir -p ${DOCKING_DIR}
+COPY ./assets/*.tar.gz ${DOCKING_DIR}/assets/
+COPY ./abagdocking ${DOCKING_DIR}/abagdocking
+COPY ./setup.py ${DOCKING_DIR}/setup.py
+
+# create environment - abagdocking (py310) and piper-py27
+COPY ./assets/create-env.sh ${DOCKING_DIR}/assets/create-env.sh
+WORKDIR ${DOCKING_DIR}/assets
+RUN zsh create-env.sh
+
+# install bioplib, bioptools, Megadock (both cpu and gpu)
+COPY ./assets/install.sh ${DOCKING_DIR}/assets/install.sh
+WORKDIR ${DOCKING_DIR}/assets
+RUN zsh install.sh
+
+# install piper
+COPY ./assets/piper.tar.gz ${DOCKING_DIR}/assets/piper.tar.gz
+COPY ./assets/install-piper.sh ${DOCKING_DIR}/assets/install-piper.sh
+WORKDIR ${DOCKING_DIR}/assets
+RUN zsh install-piper.sh
+
+# entrypoint script
+COPY ./scripts/run-piper.sh ${DOCKING_DIR}/scripts/run-piper.sh
+
+# clean up
+WORKDIR ${DOCKING_DIR}/assets
+RUN rm *.tar.gz
+
+# ------------------------------------------------------------------------------
+# End of base image
+# ------------------------------------------------------------------------------
+ENV PIPER_SCRIPT=${DOCKING_DIR}/abagdocking/piper/run_piper.py \
+  PIPER_INDIR=${DOCKING_DIR}/input \
+  PIPER_OUTDIR=${DOCKING_DIR}/output \
+  ENTRY_SCRIPT=${DOCKING_DIR}/scripts/run-piper.sh \
+  DATADIR=/opt/bioplib/data
+RUN mkdir -p ${PIPER_INDIR} ${PIPER_OUTDIR}
+WORKDIR ${DOCKING_DIR}
+ENTRYPOINT [ "zsh", "scripts/run-piper.sh" ]
